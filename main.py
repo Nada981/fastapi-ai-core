@@ -3,7 +3,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
-from core.models import CloudModel
+from core.models import GeminiCloudModel
 from services.ai_service import AIService
 
 # تحميل المتغيرات من ملف .env
@@ -11,13 +11,13 @@ load_dotenv()
 
 # قراءة المتغيرات بأمان من نظام التشغيل
 MODEL_NAME = os.getenv("AI_MODEL_NAME", "Default-Model")
-API_KEY = os.getenv("AI_API_KEY", "default-fallback-key")
+API_KEY = os.getenv("GEMINI_API_KEY", "default-fallback-key")
 
 # 1. إنشاء التطبيق
 app = FastAPI(title="SignAssist AI Service")
 
 # 2. حقن الاعتمادية باستخدام القيم الآمنة
-model = CloudModel(name=MODEL_NAME, api_key=API_KEY)
+model = GeminiCloudModel(name=MODEL_NAME, api_key=API_KEY)
 ai_service = AIService(model=model)
 
 

@@ -9,3 +9,5 @@ env/
 
 # VS Code settings
 .vscode/
+
+test_models.py
