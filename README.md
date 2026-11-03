@@ -1,57 +1,105 @@
-# FastAPI Modular AI Core Service
+# SignAssist AI Core Service 🚀
 
-A production-grade, modular microservice architecture built with **FastAPI** and **Pydantic**, designed to serve and orchestrate AI model inferences with structured validation, clean OOP abstractions, and session history management.
+A production-ready, scalable AI service core built with **FastAPI** and **Google Gemini API**, implementing **Clean Architecture** and strict software engineering design patterns.
 
-## 🚀 Key Architectural Features
+---
 
-- **Modular Design:** Strict separation of concerns across `core` (domain models and abstractions) and `services` (business logic and history logging).
-- **OOP & Dependency Injection:** Utilizes Abstract Base Classes (`ABC`) for flexible model swapping and loose coupling.
-- **Data Validation:** Powered by **Pydantic** to enforce strict input schemas and automated HTTP `422` error handling.
-- **Robust Error Handling:** Custom domain exceptions mapped cleanly to standard HTTP status codes (`400 Bad Request` vs `500 Server Error`).
-- **Interactive Documentation:** Out-of-the-box OpenAPI specification and Swagger UI testing suite.
+## 🌟 Key Features
 
-## 📁 Project Structure
+- **Modular Clean Architecture**: Separation of concerns between domain entities, abstract core models, and business logic services.
+- **Abstract Base Engine (`AIModel`)**: Pluggable interface utilizing Python's `abc` module to enforce uniform model integration and easy provider swapping.
+- **Live Google Gemini API Integration**: Direct interaction via the official `google-genai` SDK with built-in error handling and exponential backoff retry mechanisms.
+- **Type Safety & Data Validation**: Request and response parsing powered by **Pydantic**.
+- **Interactive Documentation**: Auto-generated OpenAPI/Swagger documentation for seamless API testing.
+- **Secure Configuration**: Complete isolation of sensitive credentials via environment variables (`.env`).
+
+---
+
+## 🏗️ Project Architecture
 
 ```text
-fastapi-ai-core/
 ├── core/
-│   └── models.py        # Abstract AI interfaces & concrete implementations
+│   ├── __init__.py
+│   └── models.py          # Abstract Base Class (AIModel) & GeminiCloudModel implementation
 ├── services/
-│   └── ai_service.py    # Business logic, query orchestration & history state
-├── main.py              # FastAPI endpoints, dependency setup & routing
-├── .gitignore           # Ignored caches and local environment artifacts
-└── README.md            # Technical project documentation
+│   ├── __init__.py
+│   └── ai_service.py       # AIService managing business logic, prompt handling & history
+├── main.py                 # FastAPI application routes and dependency injection
+├── .env.example            # Template for required environment variables
+├── requirements.txt        # Project dependencies
+└── README.md
 
 ```
 
-## 🛠️ Getting Started
+---
 
-### 1. Prerequisites
+## 🛠️ Tech Stack
 
-* Python 3.10+
+* **Language:** Python 3.10+
+* **Framework:** FastAPI
+* **AI SDK:** `google-genai`
+* **Model Engine:** `models/gemini-flash-latest`
+* **Validation:** Pydantic
+* **Server:** Uvicorn
 
-### 2. Installation
+---
 
-Clone the repository and install dependencies:
+## 🚀 Getting Started
+
+### 1. Clone the Repository
 
 ```bash
-git clone [https://github.com/Nada981/fastapi-ai-core.git](https://github.com/Nada981/fastapi-ai-core.git)
-cd fastapi-ai-core
-pip install fastapi uvicorn pydantic
+git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
+cd your-repo-name
 
 ```
 
-### 3. Run the Server
+### 2. Set Up a Virtual Environment
 
-Launch the development server with live reload:
+```bash
+python -m venv venv
+# Windows:
+venv\Scripts\activate
+# Linux/macOS:
+source venv/bin/activate
+
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+
+```
+
+### 4. Configure Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+AI_MODEL_NAME=gemini-flash-latest
+GEMINI_API_KEY=your_actual_gemini_api_key_here
+
+```
+
+### 5. Run the Application
 
 ```bash
 uvicorn main:app --reload
 
 ```
 
-### 4. Interactive API Docs
+Access the interactive API documentation at: `http://127.0.0.1:8000/docs`
 
-Visit the interactive Swagger UI at:
-👉 `http://127.0.0.1:8000/docs`
+---
+
+## 📡 API Endpoints
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `GET` | `/` | Health check and current model status |
+| `POST` | `/generate` | Accepts a JSON payload `{"prompt": "..."}` and returns the AI response |
+| `GET` | `/history` | Retrieves session query and response history |
+
+```
 
