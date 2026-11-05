@@ -6,27 +6,22 @@ from dotenv import load_dotenv
 from core.models import GeminiCloudModel
 from services.ai_service import AIService
 
-# تحميل المتغيرات من ملف .env
 load_dotenv()
 
-# قراءة المتغيرات بأمان من نظام التشغيل
 MODEL_NAME = os.getenv("AI_MODEL_NAME", "Default-Model")
 API_KEY = os.getenv("GEMINI_API_KEY", "default-fallback-key")
 
-# 1. إنشاء التطبيق
 app = FastAPI(title="SignAssist AI Service")
 
-# 2. حقن الاعتمادية باستخدام القيم الآمنة
 model = GeminiCloudModel(name=MODEL_NAME, api_key=API_KEY)
 ai_service = AIService(model=model)
 
 
-# 3. مخطط البيانات المدخلة
 class QueryRequest(BaseModel):
     prompt: str
 
 
-# 4. المسارات (Endpoints)
+# (Endpoints)
 @app.get("/")
 def home():
     return {
