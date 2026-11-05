@@ -6,7 +6,7 @@ import time
 
 
 class ModelInferenceError(Exception):
-    """استثناء مخصص لأخطاء التوليد"""
+    
     pass
 
 
@@ -40,7 +40,6 @@ class GeminiCloudModel(AIModel):
                )
                return {"text": response.text}
            except Exception as e:
-            # لو الخطأ ضغط خوادم 503 ننتظر ونحاول مرة أخرى
             if "503" in str(e) and attempt < max_retries - 1:
                 time.sleep(2)
                 continue
